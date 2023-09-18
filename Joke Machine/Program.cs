@@ -1,5 +1,4 @@
 using Joke_Machine.Interfaces;
-using Joke_Machine.Models;
 using Joke_Machine.Repositories;
 using Joke_Machine.Services;
 
@@ -13,8 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Dependency Injection
-builder.Services.AddScoped<IJokeRepository,JokeRepository>();
-
+builder.Services.AddSingleton<IJokeRepository, JokeRepository>();
 
 // Session
 builder.Services.AddDistributedMemoryCache();

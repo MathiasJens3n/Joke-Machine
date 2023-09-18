@@ -3,10 +3,10 @@
     public class LanguageEnums
     {
     }
+
     public enum Languages
     {
         dk,
         en
     }
-
 }

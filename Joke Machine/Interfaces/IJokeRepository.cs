@@ -4,10 +4,16 @@ namespace Joke_Machine.Interfaces
 {
     public interface IJokeRepository
     {
-        public List<Joke> JokeList { get; set; }
-        public List<string> GetCategories();
-        public Joke GetJoke(int id);
-        public void DeleteJoke(Joke joke);
+        public List<Joke> JokeList { get; }
 
+        public List<string> GetCategories();
+
+        public Joke GetJoke();
+
+        public Joke GetJoke(string lang);
+
+        public Joke GetJoke(string lang, string category);
+
+        public void DeleteJoke(Joke joke);
     }
 }

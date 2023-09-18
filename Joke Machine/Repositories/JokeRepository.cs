@@ -5,7 +5,7 @@ namespace Joke_Machine.Repositories
 {
     public class JokeRepository : IJokeRepository
     {
-        public List<Joke> JokeList { get; set; }
+        public List<Joke> JokeList { get; private set; }
 
         public JokeRepository()
         {
@@ -22,6 +22,8 @@ namespace Joke_Machine.Repositories
                 new Joke() { Id = 9, Text = "Hvor sover mågerne når de er på tur?\r\n– På Mågtel", Category = Categories.seagull.ToString(), Language = Languages.dk.ToString() },
                 new Joke() { Id = 10, Text = "Where do seagulls sleep when they travel?\n- On Seagull Island", Category = Categories.seagull.ToString(), Language = Languages.en.ToString() },
             };
+
+            Shuffle(JokeList);
         }
 
         public List<string> GetCategories()
@@ -29,14 +31,43 @@ namespace Joke_Machine.Repositories
             return JokeList.Select(x => x.Category).Distinct().ToList();
         }
 
-        public Joke GetJoke(int id)
+        public Joke GetJoke()
         {
-            return JokeList.Where(x => x.Id == id).FirstOrDefault();
+            return JokeList.FirstOrDefault();
+        }
+
+        public Joke GetJoke(string category)
+        {
+            return JokeList.Where(x => x.Category == category).FirstOrDefault();
+        }
+
+        public Joke GetJoke(string lang, string category)
+        {
+            return JokeList.Where(x => x.Language == lang && x.Category == category).FirstOrDefault();
         }
 
         public void DeleteJoke(Joke joke)
         {
             JokeList.Remove(joke);
+        }
+
+        /// <summary>
+        /// Shuffles a list using FIsher-Yates shuffle algorithm.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list">List</param>
+        private static void Shuffle<T>(List<T> list)
+        {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }
